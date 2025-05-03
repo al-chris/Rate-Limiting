@@ -8,7 +8,10 @@ from fastapi import Request, HTTPException, status
 P = ParamSpec("P")
 R = TypeVar("R")
 
-def rate_limit(max_calls: int, period: int) -> Callable[[Callable[P, Awaitable[R]]], Callable[P, Awaitable[R]]]:
+def rate_limit(
+        max_calls: int = 5,  # Default: 5 requests, 
+        period: int = 60      # Default: 60 seconds (1 minute)
+    ) -> Callable[[Callable[P, Awaitable[R]]], Callable[P, Awaitable[R]]]:
     """
     Decorator to rate limit FastAPI endpoints in-memory per process.
 
